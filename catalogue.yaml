@@ -30,6 +30,11 @@
       url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
       dest: /tmp/catalogue.zip
 
+  - name: Installing zip
+    ansible.builtin.dnf:
+      name: zip
+      state: present
+
   - name: extract catalogue code
     ansible.builtin.unarchive:
       src: /tmp/catalogue.zip
