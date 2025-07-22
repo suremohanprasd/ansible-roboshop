@@ -1,0 +1,30 @@
+- name: configuring shipping component
+  hosts: shipping
+  become: yes
+  tasks:
+  - name: install maven
+    ansible.builtin.dnf:
+      name: maven
+      state: installed
+
+  - name: create app directory
+    ansible.builtin.file:
+      name: /app
+      state: directory
+
+  - name: create robosho system user
+    ansible.builtin.user:
+      name: roboshop
+      shell: /sbin/nologin
+      system: true
+      home: /app
+
+  - name: download shipping code
+    ansible.builtin.get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip
+      dest: /tmp/shipping.zip
+
+  - name: install maven dependencies
+    ansible.builtin.command: mvn clean package
+    args:
+      chdir: /app
