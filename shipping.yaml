@@ -2,19 +2,21 @@
   hosts: shipping
   become: yes
   tasks:
-  - name: install crptography,maven and mysql
+  - name: install maven and mysql
     ansible.builtin.dnf:
       name: "{{ item }}"
       state: installed
     loop:
-    - crptography
     - maven
     - mysql
 
-  - name: install PyMySQL
+  - name: install PyMySQL and crptography
     ansible.builtin.pip:
-      name: PyMySQL
+      name: "{{ item }}"
       executable: pip3.9
+    loop:
+    - crptography
+    - PyMySQL
 
   - name: create app directory
     ansible.builtin.file:
