@@ -2,13 +2,19 @@
   hosts: shipping
   become: yes
   tasks:
-  - name: install maven
+  - name: install crptography,maven and mysql
     ansible.builtin.dnf:
       name: "{{ item }}"
       state: installed
     loop:
-    - PyMySQL
+    - crptography
     - maven
+    - mysql
+
+  - name: install PyMySQL
+    ansible.builtin.pip:
+      name: PyMySQL
+      executable: pip3.9
 
   - name: create app directory
     ansible.builtin.file:
@@ -57,11 +63,6 @@
       name: shipping
       state: started
       enabled: yes
-
-  - name: Install mysql client
-    ansible.builtin.dnf:
-      name: mysql
-      state: installed
 
   - name: connect to mysql using app user
     community.mysql.mysql_info:
