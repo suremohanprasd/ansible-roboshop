@@ -10,15 +10,7 @@
     - maven
     - mysql
 
-  # - name: install PyMySQL and crptography
-  #   ansible.builtin.pip:
-  #     name: "{{ item }}"
-  #     executable: pip3.9
-  #   loop:
-  #   - crptography
-  #   - PyMySQL
-
-  - name: install PyMySQL and cryptography 
+  - name: install PyMySQL and crptography
     ansible.builtin.pip:
       name: "{{ item }}"
       executable: pip3.9
@@ -83,6 +75,7 @@
 
   - name: import data
     community.mysql.mysql_db:
+      name: all
       login_user: root
       login_password: RoboShop@1
       login_host: mysql.dontgiveup.space
